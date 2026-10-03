@@ -11,7 +11,11 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+import os 
 
+from dotenv import load_dotenv
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -74,8 +78,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
@@ -98,6 +106,54 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+GOOGLE_CLIENT_ID = (
+    os.environ.get('GOOGLE_CLIENT_ID')
+    or ''
+).strip().strip('"').strip("'")
+
+GOOGLE_CLIENT_SECRET = (
+    os.environ.get('GOOGLE_CLIENT_SECRET')
+    or ''
+).strip().strip('"').strip("'")
+
+GITHUB_CLIENT_ID = (
+    os.environ.get('GITHUB_CLIENT_ID')
+    or ''
+).strip().strip('"').strip("'")
+
+GITHUB_CLIENT_SECRET = (
+    os.environ.get('GITHUB_CLIENT_SECRET')
+    or ''
+).strip().strip('"').strip("'")
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': GOOGLE_CLIENT_ID,
+            'secret': GOOGLE_CLIENT_SECRET,
+            'key': '',
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+    },
+    'github': {
+        'APP': {
+            'client_id': GITHUB_CLIENT_ID,
+            'secret': GITHUB_CLIENT_SECRET,
+            'key': '',
+        },
+        'SCOPE': [
+            'user',
+            'read:user',
+            'user:email',
+        ],
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
