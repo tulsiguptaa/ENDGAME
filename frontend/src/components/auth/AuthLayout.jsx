@@ -15,10 +15,7 @@ const AuthLayout = ({ children }) => {
                 {/* LEFT SIDE */}
                 <div className="auth-brand">
 
-                    <div className="brand-logo">
-                        <div className="logo-icon">✦</div>
-                        <span>ENDGAME</span>
-                    </div>
+                    
 
                     <div className="brand-content">
 
