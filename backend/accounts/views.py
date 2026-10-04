@@ -1,18 +1,23 @@
 import os
+import logging
 import requests
+import smtplib
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import redirect
-
+from django.contrib.auth.tokens import default_token_generator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import SignupSerializer
 
+
+logger = logging.getLogger(__name__)
 
 # =========================================================
 # SIGNUP
@@ -535,3 +540,117 @@ class GitHubCallbackView(APIView):
             "http://localhost:5173/dashboard"
         )
 
+
+class ForgotPasswordView(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get("email")
+
+        if not email:
+            return Response(
+                {"error": "Email is required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response(
+                {"error": "No account found with this email"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
+            logger.error("Password reset email settings are not configured.")
+            return Response(
+                {"error": "Password reset email service is not configured."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+
+        token = default_token_generator.make_token(user)
+        reset_link = (
+            f"{settings.FRONTEND_URL}/reset-password/{user.id}/{token}/"
+        )
+        message = f"""
+Hello {user.first_name},
+
+You requested to reset your password.
+
+Click the link below to create a new password:
+
+{reset_link}
+
+If you did not request this, you can safely ignore this email.
+
+Regards,
+AI Interviewer Team
+"""
+        try:
+            sent_count = send_mail(
+                subject="Reset Your Password",
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+        except (OSError, smtplib.SMTPException):
+            logger.exception("Failed to send password reset email.")
+            return Response(
+                {"error": "Could not send the reset email. Please try again later."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+
+        if sent_count != 1:
+            logger.error("Password reset email was not accepted for delivery.")
+            return Response(
+                {"error": "Could not send the reset email. Please try again later."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+
+        return Response(
+            {"message": "Password reset link sent to your email"},
+            status=status.HTTP_200_OK
+        )
+
+
+
+class ResetPasswordView(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        user_id = request.data.get("user_id")
+        token = request.data.get("token")
+        new_password = request.data.get("new_password")
+
+        if not user_id or not token or not new_password:
+            return Response(
+                {"error": "User ID, token and new password are required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response(
+                {"error": "Invalid user"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Verify token
+        if not default_token_generator.check_token(user, token):
+            return Response(
+                {"error": "Invalid or expired reset token"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Change password
+        user.set_password(new_password)
+        user.save()
+
+        return Response(
+            {"message": "Password reset successful"},
+            status=status.HTTP_200_OK
+        )

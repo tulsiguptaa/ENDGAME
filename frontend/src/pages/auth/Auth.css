@@ -1,5 +1,5 @@
 /* ============================================
-   ENDGAME — Auth Styles (Fully Themed)
+   ENDGAME — Auth Styles (Pure B&W)
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,wght@1,700;1,900&display=swap');
@@ -7,73 +7,85 @@
 /* ---------- Theme Variables ---------- */
 :root,
 [data-theme="light"] {
-  --color-primary: #8B3A3A;
-  --color-primary-hover: #7a3232;
-  --color-accent: #C49A6C;
+  /* Core palette */
+  --black: #000000;
+  --white: #ffffff;
 
-  --bg-page: #F7F3EE;
-  --bg-card: #FFFFFF;
-  --bg-input: #F7F3EE;
-  --bg-input-hover: #F2EDE6;
-  --bg-navbar: rgba(247, 243, 238, 0.85);
-  --bg-social: #FFFFFF;
-  --bg-social-hover: #F7F3EE;
-  --bg-password-toggle-hover: rgba(196, 154, 108, 0.18);
+  /* Semantic tokens */
+  --bg-page: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-input-hover: #f5f5f5;
+  --bg-navbar: rgba(255, 255, 255, 0.85);
+  --bg-social: #ffffff;
+  --bg-social-hover: #f5f5f5;
+  --bg-toggle-hover: rgba(0, 0, 0, 0.06);
+  --bg-subtle: #f5f5f5;
 
-  --text-primary: #272222;
-  --text-secondary: #6b6360;
-  --text-muted: #9a918c;
-  --text-on-primary: #FFFFFF;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-muted: #737373;
+  --text-on-primary: #ffffff;
 
-  --border-soft: rgba(39, 34, 34, 0.12);
-  --border-strong: rgba(39, 34, 34, 0.2);
+  --border-soft: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.3);
+  --border-focus: #000000;
+
+  /* Button = black on white */
+  --btn-bg: #000000;
+  --btn-bg-hover: #1a1a1a;
+  --btn-text: #ffffff;
 
   --shadow-card:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 20px 50px rgba(39, 34, 34, 0.12),
-    0 4px 12px rgba(39, 34, 34, 0.06);
+    0 20px 50px rgba(0, 0, 0, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.05);
 
   --shadow-button:
-    0 1px 0 rgba(255, 255, 255, 0.15) inset,
-    0 4px 16px rgba(139, 58, 58, 0.28);
+    0 4px 16px rgba(0, 0, 0, 0.25);
 
-  --ring-focus: 0 0 0 4px rgba(139, 58, 58, 0.12);
-  --autofill-bg: #F7F3EE;
+  --ring-focus: 0 0 0 4px rgba(0, 0, 0, 0.1);
+  --autofill-bg: #ffffff;
 }
 
 [data-theme="dark"] {
-  --color-primary: #C25A5A;
-  --color-primary-hover: #D06B6B;
-  --color-accent: #C49A6C;
+  --black: #000000;
+  --white: #ffffff;
 
-  --bg-page: #14100F;
-  --bg-card: #1C1817;
-  --bg-input: #14100F;
-  --bg-input-hover: #1A1615;
-  --bg-navbar: rgba(20, 16, 15, 0.85);
-  --bg-social: #1C1817;
-  --bg-social-hover: #221D1C;
-  --bg-password-toggle-hover: rgba(196, 154, 108, 0.15);
+  --bg-page: #000000;
+  --bg-card: #0a0a0a;
+  --bg-input: #0a0a0a;
+  --bg-input-hover: #141414;
+  --bg-navbar: rgba(0, 0, 0, 0.85);
+  --bg-social: #0a0a0a;
+  --bg-social-hover: #141414;
+  --bg-toggle-hover: rgba(255, 255, 255, 0.08);
+  --bg-subtle: #141414;
 
-  --text-primary: #F7F3EE;
-  --text-secondary: #a89f9a;
-  --text-muted: #7a726e;
-  --text-on-primary: #FFFFFF;
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d4;
+  --text-muted: #8a8a8a;
+  --text-on-primary: #000000;
 
-  --border-soft: rgba(247, 243, 238, 0.1);
-  --border-strong: rgba(247, 243, 238, 0.18);
+  --border-soft: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.35);
+  --border-focus: #ffffff;
+
+  /* Button = white on black */
+  --btn-bg: #ffffff;
+  --btn-bg-hover: #e6e6e6;
+  --btn-text: #000000;
 
   --shadow-card:
     0 1px 0 rgba(255, 255, 255, 0.03) inset,
-    0 20px 50px rgba(0, 0, 0, 0.5),
-    0 4px 12px rgba(0, 0, 0, 0.3);
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    0 4px 12px rgba(0, 0, 0, 0.4);
 
   --shadow-button:
-    0 1px 0 rgba(255, 255, 255, 0.12) inset,
-    0 4px 16px rgba(194, 90, 90, 0.35);
+    0 4px 16px rgba(255, 255, 255, 0.15);
 
-  --ring-focus: 0 0 0 4px rgba(194, 90, 90, 0.2);
-  --autofill-bg: #14100F;
+  --ring-focus: 0 0 0 4px rgba(255, 255, 255, 0.15);
+  --autofill-bg: #0a0a0a;
 }
 
 /* ---------- Reset ---------- */
@@ -144,15 +156,12 @@ body {
   color: var(--text-primary);
 }
 
+/* Keep the italic accent, but monochrome */
 .form-header h2 em {
   font-family: 'Fraunces', Georgia, serif;
   font-style: italic;
   font-weight: 700;
-  background: linear-gradient(120deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--text-primary);
   padding-right: 4px;
 }
 
@@ -184,9 +193,9 @@ body {
 }
 
 .error-message {
-  background: rgba(139, 58, 58, 0.08);
-  border: 1px solid rgba(139, 58, 58, 0.25);
-  color: var(--color-primary);
+  background: transparent;
+  border: 1px solid var(--text-primary);
+  color: var(--text-primary);
 }
 
 .error-message span {
@@ -197,16 +206,16 @@ body {
   justify-content: center;
   flex-shrink: 0;
   border-radius: 50%;
-  background: rgba(139, 58, 58, 0.15);
-  color: var(--color-primary);
+  background: var(--text-primary);
+  color: var(--bg-card);
   font-weight: 800;
   font-size: 12px;
 }
 
 .success-message {
-  background: rgba(76, 130, 82, 0.1);
-  border: 1px solid rgba(76, 130, 82, 0.28);
-  color: #4C8252;
+  background: transparent;
+  border: 1px dashed var(--text-primary);
+  color: var(--text-primary);
 }
 
 .success-message span {
@@ -217,8 +226,8 @@ body {
   justify-content: center;
   flex-shrink: 0;
   border-radius: 50%;
-  background: rgba(76, 130, 82, 0.18);
-  color: #4C8252;
+  background: var(--text-primary);
+  color: var(--bg-card);
   font-weight: 800;
   font-size: 12px;
 }
@@ -247,16 +256,17 @@ body {
   border: none;
   background: none;
   padding: 0;
-  color: var(--color-primary);
+  color: var(--text-primary);
   font-family: inherit;
   font-size: 12.5px;
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.15s ease;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
 }
 
 .forgot-link:hover {
-  color: var(--color-accent);
+  opacity: 1;
   text-decoration: underline;
 }
 
@@ -310,7 +320,7 @@ body {
 }
 
 .input-wrapper input:focus {
-  border-color: var(--color-primary);
+  border-color: var(--border-focus);
   background: var(--bg-input);
   box-shadow: var(--ring-focus);
 }
@@ -333,7 +343,7 @@ body {
 }
 
 .input-wrapper:focus-within .input-icon {
-  color: var(--color-primary);
+  color: var(--text-primary);
 }
 
 /* ---------- Password Toggle ---------- */
@@ -350,7 +360,7 @@ body {
   border: none;
   border-radius: 6px;
   background: none;
-  color: var(--color-primary);
+  color: var(--text-primary);
   font-family: inherit;
   font-size: 11.5px;
   font-weight: 600;
@@ -360,8 +370,7 @@ body {
 }
 
 .password-toggle:hover {
-  color: var(--text-primary);
-  background: var(--bg-password-toggle-hover);
+  background: var(--bg-toggle-hover);
 }
 
 /* ---------- Password Strength ---------- */
@@ -383,7 +392,7 @@ body {
 }
 
 .strength-bars span.active {
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  background: var(--text-primary);
 }
 
 .password-strength small {
@@ -404,7 +413,7 @@ body {
 
 .terms-row input {
   margin-top: 2px;
-  accent-color: var(--color-primary);
+  accent-color: var(--text-primary);
   cursor: pointer;
   width: 15px;
   height: 15px;
@@ -419,25 +428,24 @@ body {
 }
 
 .terms-row label a {
-  color: var(--color-primary);
+  color: var(--text-primary);
   text-decoration: none;
   font-weight: 500;
 }
 
 .terms-row label a:hover {
-  color: var(--color-accent);
   text-decoration: underline;
 }
 
-/* ---------- Submit Button ---------- */
+/* ---------- Submit Button (INVERTS with theme) ---------- */
 .submit-button {
   width: 100%;
   height: 50px;
   margin-top: 6px;
-  border: none;
+  border: 1px solid var(--btn-bg);
   border-radius: 11px;
-  background: var(--color-primary);
-  color: var(--text-on-primary);
+  background: var(--btn-bg);
+  color: var(--btn-text);
   font-family: inherit;
   font-size: 14.5px;
   font-weight: 600;
@@ -448,12 +456,13 @@ body {
   justify-content: center;
   gap: 10px;
   transition: all 0.2s ease;
-  box-shadow: var(--shadow-button);
 }
 
 .submit-button:hover:not(:disabled) {
-  background: var(--color-primary-hover);
+  background: var(--btn-bg-hover);
+  border-color: var(--btn-bg-hover);
   transform: translateY(-1px);
+  box-shadow: var(--shadow-button);
 }
 
 .submit-button:active:not(:disabled) {
@@ -461,7 +470,7 @@ body {
 }
 
 .submit-button:disabled {
-  opacity: 0.65;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
@@ -474,12 +483,12 @@ body {
   transform: translateX(3px);
 }
 
-/* ---------- Spinner ---------- */
+/* ---------- Spinner (inverts too) ---------- */
 .spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  border-top-color: #FFFFFF;
+  border: 2px solid rgba(128, 128, 128, 0.4);
+  border-top-color: var(--btn-text);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
@@ -520,7 +529,7 @@ body {
   width: 100%;
   height: 46px;
   border-radius: 11px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-strong);
   background: var(--bg-social);
   color: var(--text-primary);
   font-family: inherit;
@@ -536,7 +545,6 @@ body {
 
 .social-button:hover {
   background: var(--bg-social-hover);
-  border-color: var(--color-accent);
   transform: translateY(-1px);
 }
 
@@ -548,6 +556,18 @@ body {
   width: 17px;
   height: 17px;
   flex-shrink: 0;
+}
+
+/* Monochrome Google icon in dark mode */
+[data-theme="dark"] .social-button svg path {
+  fill: #ffffff;
+}
+
+[data-theme="dark"] .social-button svg path[fill="#4285F4"],
+[data-theme="dark"] .social-button svg path[fill="#34A853"],
+[data-theme="dark"] .social-button svg path[fill="#FBBC05"],
+[data-theme="dark"] .social-button svg path[fill="#EA4335"] {
+  fill: #ffffff;
 }
 
 /* ---------- Signup / Login Text ---------- */
@@ -562,14 +582,13 @@ body {
 
 .signup-text a {
   margin-left: 5px;
-  color: var(--color-primary);
+  color: var(--text-primary);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.15s ease;
 }
 
 .signup-text a:hover {
-  color: var(--color-accent);
   text-decoration: underline;
 }
 
@@ -594,10 +613,9 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 16px;
-    color: #FFFFFF;
+    color: var(--btn-text);
     border-radius: 10px;
-    background: linear-gradient(135deg, #8B3A3A, #C49A6C);
-    box-shadow: 0 4px 12px rgba(139, 58, 58, 0.28);
+    background: var(--btn-bg);
   }
 }
 

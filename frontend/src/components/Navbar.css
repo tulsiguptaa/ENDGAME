@@ -1,5 +1,5 @@
 /* ============================================
-   ENDGAME — Navbar
+   ENDGAME — Navbar (Pure B&W)
    ============================================ */
 
 .endgame-navbar {
@@ -10,8 +10,8 @@
 
   z-index: 100;
 
-  background: var(--bg-navbar);
-  border-bottom: 1px solid var(--border-soft);
+  background: var(--bg-navbar, rgba(255, 255, 255, 0.85));
+  border-bottom: 1px solid var(--border-soft, rgba(0, 0, 0, 0.12));
 
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -43,13 +43,13 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
 
-  color: var(--text-primary);
+  color: var(--text-primary, #000000);
 
-  transition: color 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .navbar-brand:hover {
-  color: var(--color-primary);
+  opacity: 0.7;
 }
 
 .navbar-logo {
@@ -62,13 +62,11 @@
 
   border-radius: 9px;
 
-  background: linear-gradient(135deg, #8B3A3A, #C49A6C);
-  color: #FFFFFF;
+  background: var(--btn-bg, #000000);
+  color: var(--btn-text, #ffffff);
 
   font-size: 15px;
   line-height: 1;
-
-  box-shadow: 0 4px 12px rgba(139, 58, 58, 0.25);
 }
 
 /* ---------- Actions ---------- */
@@ -88,10 +86,10 @@
 
   border-radius: 10px;
 
-  border: 1px solid var(--border-soft);
-  background: var(--bg-input);
+  border: 1px solid var(--border-soft, rgba(0, 0, 0, 0.12));
+  background: transparent;
 
-  color: var(--text-primary);
+  color: var(--text-primary, #000000);
 
   cursor: pointer;
 
@@ -99,9 +97,7 @@
 }
 
 .theme-toggle:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  background: var(--bg-input-hover);
+  background: var(--bg-toggle-hover, rgba(0, 0, 0, 0.06));
   transform: translateY(-1px);
 }
 

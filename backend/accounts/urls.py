@@ -7,7 +7,9 @@ from .views import (
     GoogleLoginView,
     GoogleCallbackView,
     GitHubCallbackView,
-    GitHubLoginView
+    GitHubLoginView,
+    ForgotPasswordView,
+    ResetPasswordView
 )
 
 urlpatterns = [
@@ -35,5 +37,7 @@ urlpatterns = [
     path( "google/", GoogleLoginView.as_view(), name="google-login", ),
     path( "google/callback/", GoogleCallbackView.as_view(), name="google-callback", ),
     path("github/", GitHubLoginView.as_view(), name="github-login"), 
-    path( "github/callback/", GitHubCallbackView.as_view(), name="github-callback" ),
+    path("github/callback/", GitHubCallbackView.as_view(), name="github-callback" ),
+    path("forgot-password/", ForgotPasswordView.as_view(), name="forgot-password"),
+    path("reset-password/", ResetPasswordView.as_view(), name="reset-password"),
 ]
