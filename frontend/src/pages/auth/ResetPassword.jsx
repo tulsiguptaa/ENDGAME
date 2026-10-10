@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import AuthLayout from "../../components/auth/AuthLayout";
+import api from "../../services/api";
 
 import "./Auth.css";
 
@@ -32,33 +33,16 @@ function ResetPassword() {
     try {
       setLoading(true);
 
-      const response = await fetch(
-        "http://localhost:8000/api/auth/reset-password/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: userId,
-            token: token,
-            new_password: password,
-          }),
-        }
-      );
+      const response = await api.post("/auth/reset-password/", {
+        user_id: userId,
+        token: token,
+        new_password: password,
+      });
 
-      const data = await response.json();
-
-      console.log(data);
-
-      if (response.ok) {
-        setSuccess("Password reset successful!");
-      } else {
-        setError(data.error || "Password reset failed");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setError("Something went wrong");
+      setSuccess(response.data?.message || "Password reset successful!");
+    } catch (err) {
+      console.error("Error:", err);
+      setError(err.response?.data?.error || "Password reset failed. Please try again.");
     } finally {
       setLoading(false);
     }

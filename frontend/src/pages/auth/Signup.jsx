@@ -112,13 +112,13 @@ const Signup = () => {
     };
 
     const handleGoogleSignup = () => {
-        window.location.href =
-            "http://127.0.0.1:8000/api/auth/google/";
+        const base = api.defaults.baseURL || "http://localhost:8000/api";
+        window.location.href = `${base}/auth/google/`;
     };
 
     const handleGithubSignup = () => {
-        window.location.href =
-            "http://127.0.0.1:8000/api/auth/github/";
+        const base = api.defaults.baseURL || "http://localhost:8000/api";
+        window.location.href = `${base}/auth/github/`;
     };
 
     return (

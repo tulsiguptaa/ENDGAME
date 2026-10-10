@@ -3,10 +3,10 @@ import {
     Routes,
     Route,
     Navigate,
-    Link,
 } from "react-router-dom";
 
 import { ThemeProvider } from "./context/ThemeContext";
+import { useAuth } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 
 import Login from "./pages/auth/Login";
@@ -15,68 +15,17 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import Interview from "./pages/auth/Interview";
+import ResumeUpload from "./pages/auth/ResumeUpload";
+import Profile from "./pages/Profile";
 
-import Interview from "./pages/Interview";
-import ResumeUpload from "./pages/ResumeUpload";
+import "./App.css";
 
-function Dashboard() {
-    return (
-        <div style={{ paddingTop: "80px", textAlign: "center" }}>
-            <h1
-                style={{
-                    fontSize: "32px",
-                    fontWeight: 800,
-                    letterSpacing: "1px",
-                }}
-            >
-                ENDGAME
-            </h1>
-
-            <p>You are successfully authenticated.</p>
-
-            <Link to="/resume-upload">
-                Go to Resume Studio
-            </Link>
-        </div>
-    );
-}
-
-function CareerHeader() {
-    return (
-        <header className="site-header">
-            <Link
-                className="brand"
-                to="/resume-upload"
-                aria-label="CareerCanvas home"
-            >
-                <span className="brand-mark">C</span>
-                <span>CareerCanvas</span>
-            </Link>
-
-            <nav className="site-nav" aria-label="Main navigation">
-                <Link to="/resume-upload">
-                    Resume Studio
-                </Link>
-
-                <Link to="/resume-upload#resumes">
-                    Your Resumes
-                </Link>
-
-                <Link to="/interview">
-                    Interview
-                </Link>
-
-                <Link to="/dashboard">
-                    Dashboard
-                </Link>
-            </nav>
-
-            <span className="header-note">
-                <span className="status-dot" />
-                AI-powered career prep
-            </span>
-        </header>
-    );
+function HomeRedirect() {
+    const { isAuthenticated, loading } = useAuth();
+    if (loading) return null;
+    return <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />;
 }
 
 function App() {
@@ -84,13 +33,13 @@ function App() {
         <ThemeProvider>
             <BrowserRouter>
                 <Routes>
-                    {/* PUBLIC ROUTES */}
-
+                    {/* ROOT REDIRECT */}
                     <Route
                         path="/"
-                        element={<Navigate to="/login" replace />}
+                        element={<HomeRedirect />}
                     />
 
+                    {/* PUBLIC AUTH ROUTES */}
                     <Route
                         path="/login"
                         element={<Login />}
@@ -111,49 +60,55 @@ function App() {
                         element={<ResetPassword />}
                     />
 
-                    {/* PROTECTED ROUTES */}
-
-                    <Route
-                        element={<ProtectedRoute />}
-                    >
+                    {/* PROTECTED APPLICATION ROUTES */}
+                    <Route element={<ProtectedRoute />}>
                         <Route
                             path="/app"
-                            element={<Navigate to="/resume-upload" replace />}
+                            element={<Navigate to="/dashboard" replace />}
                         />
 
                         <Route
                             path="/dashboard"
                             element={
-                                <>
+                                <div className="page-shell">
                                     <Navbar />
                                     <Dashboard />
-                                </>
+                                </div>
                             }
                         />
 
                         <Route
                             path="/resume-upload"
                             element={
-                                <>
-                                    <CareerHeader />
+                                <div className="page-shell">
+                                    <Navbar />
                                     <ResumeUpload />
-                                </>
+                                </div>
                             }
                         />
 
                         <Route
                             path="/interview"
                             element={
-                                <>
-                                    <CareerHeader />
+                                <div className="page-shell">
+                                    <Navbar />
                                     <Interview />
-                                </>
+                                </div>
+                            }
+                        />
+
+                        <Route
+                            path="/profile"
+                            element={
+                                <div className="page-shell">
+                                    <Navbar />
+                                    <Profile />
+                                </div>
                             }
                         />
                     </Route>
 
                     {/* FALLBACK */}
-
                     <Route
                         path="*"
                         element={<Navigate to="/" replace />}
@@ -165,4 +120,3 @@ function App() {
 }
 
 export default App;
-

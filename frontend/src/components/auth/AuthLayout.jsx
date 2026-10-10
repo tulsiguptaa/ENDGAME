@@ -1,9 +1,11 @@
 import React from "react";
+import Navbar from "../Navbar";
 import "./AuthLayout.css";
 
 const AuthLayout = ({ children }) => {
     return (
         <div className="auth-page">
+            <Navbar />
 
             <div className="auth-background">
                 <div className="glow glow-one"></div>
@@ -14,8 +16,6 @@ const AuthLayout = ({ children }) => {
 
                 {/* LEFT SIDE */}
                 <div className="auth-brand">
-
-                    
 
                     <div className="brand-content">
 
