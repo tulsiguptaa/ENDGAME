@@ -2,7 +2,6 @@ import os
 import logging
 import requests
 import smtplib
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -19,9 +18,6 @@ from .serializers import SignupSerializer
 
 logger = logging.getLogger(__name__)
 
-# =========================================================
-# SIGNUP
-# =========================================================
 
 class SignupView(APIView):
 
@@ -51,9 +47,6 @@ class SignupView(APIView):
         )
 
 
-# =========================================================
-# LOGIN
-# =========================================================
 
 class LoginView(APIView):
 
@@ -100,11 +93,6 @@ class LoginView(APIView):
             status=status.HTTP_200_OK
         )
 
-
-# =========================================================
-# LOGOUT
-# =========================================================
-
 class LogoutView(APIView):
 
     def post(self, request):
@@ -119,9 +107,6 @@ class LogoutView(APIView):
         )
 
 
-# =========================================================
-# CURRENT USER
-# =========================================================
 
 class CurrentUserView(APIView):
 
@@ -140,9 +125,6 @@ class CurrentUserView(APIView):
         )
 
 
-# =========================================================
-# GOOGLE LOGIN
-# =========================================================
 
 class GoogleLoginView(APIView):
 
@@ -176,9 +158,6 @@ class GoogleLoginView(APIView):
         return redirect(google_auth_url)
 
 
-# =========================================================
-# GOOGLE CALLBACK
-# =========================================================
 
 class GoogleCallbackView(APIView):
 
@@ -219,9 +198,6 @@ class GoogleCallbackView(APIView):
             "/api/auth/google/callback/"
         )
 
-        # -------------------------------------------------
-        # Exchange Google authorization code for token
-        # -------------------------------------------------
 
         token_response = requests.post(
             "https://oauth2.googleapis.com/token",
@@ -262,10 +238,6 @@ class GoogleCallbackView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # -------------------------------------------------
-        # Get Google user information
-        # -------------------------------------------------
-
         user_response = requests.get(
             "https://www.googleapis.com/oauth2/v2/userinfo",
             headers={
@@ -301,17 +273,10 @@ class GoogleCallbackView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # -------------------------------------------------
-        # Find existing user
-        # -------------------------------------------------
-
         user = User.objects.filter(
             email=email
         ).first()
 
-        # -------------------------------------------------
-        # Create user if doesn't exist
-        # -------------------------------------------------
 
         if user is None:
 
@@ -353,15 +318,8 @@ class GoogleCallbackView(APIView):
 
             user.save()
 
-        # -------------------------------------------------
-        # Create Django session
-        # -------------------------------------------------
 
         login(request, user)
-
-        # -------------------------------------------------
-        # Redirect to React
-        # -------------------------------------------------
 
         return redirect(
             "http://localhost:5173/dashboard"
