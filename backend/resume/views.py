@@ -294,12 +294,19 @@ def save_interview_answer(request, question_id):
 
         answer_text = request.data.get("answer", "")
 
-        answer, created = InterviewAnswer.objects.update_or_create(
+        answer, created = InterviewAnswer.objects.get_or_create(
             question=question,
-            defaults={
-                "answer": answer_text
-            }
+            defaults={"answer": answer_text}
         )
+
+        if not created and answer.answer != answer_text:
+            answer.answer = answer_text
+            answer.score = None
+            answer.feedback = ""
+            answer.strengths = []
+            answer.improvements = []
+            answer.evaluated = False
+            answer.save()
 
         return Response(
             {
